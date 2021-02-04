@@ -167,6 +167,7 @@ class Plugin_OBJ():
         ffmpeg_command.extend([
                                 "-c:v", "libvpx",
                                 "-c:a", "libvorbis",
+                                "-speed", "4",
                                 "-f", "webm"
                                 ])
 
