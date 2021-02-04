@@ -4,11 +4,9 @@ from io import StringIO
 
 
 class Watch_HTML():
-    endpoints = ["/webwatch", "/webwatch.html"]
+    endpoints = ["/webwatch"]
     endpoint_name = "page_webwatch_html"
     endpoint_access_level = 0
-    pretty_name = "Watch"
-    endpoint_category = "pages"
 
     def __init__(self, fhdhr, plugin_utils):
         self.fhdhr = fhdhr
