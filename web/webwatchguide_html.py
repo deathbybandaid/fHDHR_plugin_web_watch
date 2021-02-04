@@ -53,9 +53,11 @@ class WatchGuide_HTML():
                 now_playing = self.get_whats_on(whatson_all, fhdhr_id, origin)
                 current_listing = now_playing["listing"][0]
 
-                channel_dict["listing_title"] = str(current_listing["title"]).replace("('", "").replace("')", ""),
-                channel_dict["listing_thumbnail"] = str(current_listing["thumbnail"]).replace("('", "").replace("')", ""),
-                channel_dict["listing_description"] = str(current_listing["description"]).replace("('", "").replace("')", ""),
+                print(current_listing["title"])
+
+                channel_dict["listing_title"] = current_listing["title"],
+                channel_dict["listing_thumbnail"] = current_listing["thumbnail"],
+                channel_dict["listing_description"] = current_listing["description"],
 
                 if current_listing["time_end"]:
                     channel_dict["listing_remaining_time"] = humanized_time(current_listing["time_end"] - nowtime)
