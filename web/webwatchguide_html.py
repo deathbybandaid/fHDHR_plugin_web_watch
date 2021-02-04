@@ -53,8 +53,6 @@ class WatchGuide_HTML():
                 now_playing = self.get_whats_on(whatson_all, fhdhr_id, origin)
                 current_listing = now_playing["listing"][0]
 
-                print(current_listing["thumbnail"])
-
                 channel_dict["listing_title"] = current_listing["title"],
                 channel_dict["listing_thumbnail"] = current_listing["thumbnail"],
                 channel_dict["listing_description"] = current_listing["description"],
@@ -73,6 +71,7 @@ class WatchGuide_HTML():
                     else:
                         channel_dict["listing_%s" % time_item] = str(datetime.datetime.fromtimestamp(current_listing[time_item]))
                 channelslist[channel_obj.number] = channel_dict
+                print(channel_dict)
 
             # Sort the channels
             sorted_channel_list = channel_sort(list(channelslist.keys()))
