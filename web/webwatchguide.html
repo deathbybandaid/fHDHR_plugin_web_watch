@@ -28,7 +28,7 @@
       </thead>
 
       <tbody class="body-half-screen">
-        {% for chan_dict in chan_guide_list %}
+        {% for chan_dict in list(chan_guide_list.keys()) %}
           <tr>
             <td>
               {% if chan_dict["enabled"] %}
