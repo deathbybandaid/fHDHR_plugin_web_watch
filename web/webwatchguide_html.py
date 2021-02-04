@@ -50,25 +50,26 @@ class WatchGuide_HTML():
                 channel_dict["chan_thumbnail"] = channel_obj.thumbnail
                 channel_dict["watch_url"] = '/webwatch?channel=%s&origin=%s' % (fhdhr_id, origin)
 
-                channel_dict["now_playing"] = self.get_whats_on(whatson_all, fhdhr_id, origin)
+                now_playing = self.get_whats_on(whatson_all, fhdhr_id, origin)
+                current_listing = now_playing["listing"][0]
 
-                channel_dict["listing_title"] = channel_dict["now_playing"]["listing"][0]["title"][0],
-                channel_dict["listing_thumbnail"] = channel_dict["now_playing"]["listing"][0]["thumbnail"][0],
-                channel_dict["listing_description"] = channel_dict["now_playing"]["listing"][0]["description"][0],
+                channel_dict["listing_title"] = current_listing["title"],
+                channel_dict["listing_thumbnail"] = current_listing["thumbnail"],
+                channel_dict["listing_description"] = current_listing["description"],
 
-                if channel_dict["now_playing"]["listing"][0]["time_end"]:
-                    channel_dict["listing_remaining_time"] = humanized_time(channel_dict["now_playing"]["listing"][0]["time_end"] - nowtime)
+                if current_listing["time_end"]:
+                    channel_dict["listing_remaining_time"] = humanized_time(current_listing["time_end"] - nowtime)
                 else:
                     channel_dict["listing_remaining_time"] = "N/A"
 
                 for time_item in ["time_start", "time_end"]:
 
-                    if not channel_dict["now_playing"]["listing"][0][time_item]:
+                    if not current_listing[time_item]:
                         channel_dict["listing_%s" % time_item] = "N/A"
-                    elif str(channel_dict["now_playing"]["listing"][0][time_item]).endswith(tuple(["+0000", "+00:00"])):
-                        channel_dict["listing_%s" % time_item] = str(channel_dict["now_playing"]["listing"][0][time_item])
+                    elif str(current_listing[time_item]).endswith(tuple(["+0000", "+00:00"])):
+                        channel_dict["listing_%s" % time_item] = str(current_listing[time_item])
                     else:
-                        channel_dict["listing_%s" % time_item] = str(datetime.datetime.fromtimestamp(channel_dict["now_playing"]["listing"][0][time_item]))
+                        channel_dict["listing_%s" % time_item] = str(datetime.datetime.fromtimestamp(current_listing[time_item]))
                 channelslist[channel_obj.number] = channel_dict
 
             # Sort the channels
