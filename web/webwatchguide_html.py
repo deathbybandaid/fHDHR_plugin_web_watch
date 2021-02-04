@@ -32,6 +32,8 @@ class WatchGuide_HTML():
 
     def get(self, *args):
 
+        nowtime = datetime.datetime.utcnow().timestamp()
+
         origin_methods = self.fhdhr.origins.valid_origins
         if len(self.fhdhr.origins.valid_origins):
             origin = request.args.get('origin', default=self.fhdhr.origins.valid_origins[0], type=str)
@@ -56,6 +58,20 @@ class WatchGuide_HTML():
                 channel_dict["listing_title"] = current_listing["title"],
                 channel_dict["listing_thumbnail"] = current_listing["thumbnail"],
                 channel_dict["listing_description"] = current_listing["description"],
+
+                if current_listing["time_end"]:
+                    channel_dict["listing_remaining_time"] = humanized_time(current_listing["time_end"] - nowtime)
+                else:
+                    channel_dict["listing_remaining_time"] = "N/A"
+
+                for time_item in ["time_start", "time_end"]:
+
+                    if not current_listing[time_item]:
+                        channel_dict["listing_%s" % time_item] = "N/A"
+                    elif str(current_listing[time_item]).endswith(tuple(["+0000", "+00:00"])):
+                        channel_dict["listing_%s" % time_item] = str(current_listing[time_item])
+                    else:
+                        channel_dict["listing_%s" % time_item] = str(datetime.datetime.fromtimestamp(current_listing[time_item]))
 
                 channelslist[channel_obj.number] = channel_dict
 
