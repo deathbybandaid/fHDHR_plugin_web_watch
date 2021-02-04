@@ -7,7 +7,7 @@ from fHDHR.tools import channel_sort, humanized_time
 
 
 class WatchGuide_HTML():
-    endpoints = ["/webwatch/guide"]
+    endpoints = ["/webwatch_guide"]
     endpoint_name = "page_webwatchguide_html"
     endpoint_access_level = 0
     pretty_name = "Watch"
