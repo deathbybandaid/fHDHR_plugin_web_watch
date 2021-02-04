@@ -56,7 +56,7 @@ class WatchGuide_HTML():
                 channel_dict["listing_thumbnail"] = channel_dict["now_playing"]["listing"][0]["thumbnail"],
                 channel_dict["listing_description"] = channel_dict["now_playing"]["listing"][0]["description"],
 
-                if channel_dict["now_playing"][0]["time_end"]:
+                if channel_dict["now_playing"]["listing"][0]["time_end"]:
                     channel_dict["listing_remaining_time"] = humanized_time(channel_dict["now_playing"]["listing"][0]["time_end"] - nowtime)
                 else:
                     channel_dict["listing_remaining_time"] = "N/A"
