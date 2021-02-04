@@ -69,6 +69,7 @@ class WatchGuide_HTML():
                         channel_dict["listing_%s" % time_item] = str(channel_dict["now_playing"]["listing"][0][time_item])
                     else:
                         channel_dict["listing_%s" % time_item] = str(datetime.datetime.fromtimestamp(channel_dict["now_playing"]["listing"][0][time_item]))
+                channelslist[channel_obj.number] = channel_dict
 
             # Sort the channels
             sorted_channel_list = channel_sort(list(channelslist.keys()))
