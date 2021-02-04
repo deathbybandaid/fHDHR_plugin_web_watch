@@ -50,6 +50,7 @@ class WatchGuide_HTML():
                 channel_dict["watch_url"] = '/api/webwatch?method=stream&channel=%s&origin=%s' % (fhdhr_id, origin)
 
                 channel_dict["now_playing"] = self.get_whats_on(whatson_all, fhdhr_id)
+                print(channel_dict["now_playing"])
 
                 channel_dict["listing_title"] = channel_dict["now_playing"]["listing"][0]["title"],
                 channel_dict["listing_thumbnail"] = channel_dict["now_playing"]["listing"][0]["thumbnail"],
