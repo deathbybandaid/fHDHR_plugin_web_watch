@@ -65,6 +65,9 @@ class WatchGuide_HTML():
                 else:
                     channel_dict["listing_remaining_time"] = "N/A"
 
+                print(channel_dict)
+                return
+
                 for time_item in ["time_start", "time_end"]:
 
                     if not current_listing[time_item]:
