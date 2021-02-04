@@ -168,6 +168,7 @@ class Plugin_OBJ():
                                 "-c:v", "libvpx",
                                 "-c:a", "libvorbis",
                                 "-speed", "4",
+                                "-deadline", "realtime",
                                 "-f", "webm"
                                 ])
 
