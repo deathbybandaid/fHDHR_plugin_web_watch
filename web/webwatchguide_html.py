@@ -24,8 +24,8 @@ class WatchGuide_HTML():
         return self.get(*args)
 
     def get_whats_on(self, whatson_all, fhdhr_id):
+        print(whatson_all.keys())
         for channel in list(whatson_all.keys()):
-            print(whatson_all[channel]["id"])
             if whatson_all[channel]["id"] == fhdhr_id:
                 return whatson_all[channel]
         return {}
