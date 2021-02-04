@@ -68,7 +68,7 @@ class Plugin_OBJ():
         if self.plugin_utils.config.internal["versions"]["ffmpeg"]["version"] == "Missing":
             raise TunerError("806 - Tune Failed: FFMPEG Missing")
 
-        self.bytes_per_read = 1024
+        self.bytes_per_read = int(plugin_utils.config.dict["streaming"]["bytes_per_read"])
         self.ffmpeg_command = self.ffmpeg_command_assemble(stream_args)
 
     def get(self):
@@ -168,7 +168,6 @@ class Plugin_OBJ():
                                 "-c:v", "libvpx",
                                 "-c:a", "libvorbis",
                                 "-speed", "4",
-                                "-deadline", "realtime",
                                 "-f", "webm"
                                 ])
 
