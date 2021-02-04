@@ -5,8 +5,8 @@
   <h4 style="text-align: center;">WebWatch Guide</h4>
 
   <p>
-    {% for epg_method in epg_methods %}
-      <button onclick="location.href='/guide?source={{ epg_method }}'" type="button">{{ epg_method }}</button>
+    {% for origin in origin_methods %}
+      <button onclick="location.href='/webwatch_guide?origin={{ origin }}'" type="button">{{ origin }}</button>
     {% endfor %}
   </p>
 
