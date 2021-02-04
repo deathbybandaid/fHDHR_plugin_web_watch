@@ -73,6 +73,8 @@ class WatchGuide_HTML():
                         channel_dict["listing_%s" % time_item] = str(current_listing[time_item])
                     else:
                         channel_dict["listing_%s" % time_item] = str(datetime.datetime.fromtimestamp(current_listing[time_item]))
+                print(channel_dict)
+                return
                 channelslist[channel_obj.number] = channel_dict
 
         return render_template_string(self.template.getvalue(), request=request, session=session, fhdhr=self.fhdhr, channelslist=channelslist, origin=origin, origin_methods=origin_methods, list=list)
