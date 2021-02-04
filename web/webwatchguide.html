@@ -39,10 +39,10 @@
             </td>
             <td>{{ channelslist[chan_dict]["name"] }}</td>
             <td>{{ channelslist[chan_dict]["number"] }}</td>
-            <td><img src="{{ channelslist[chan_dict]["chan_thumbnail"].replace("('", "").replace("',)", "") }}" alt="{{ channelslist[chan_dict]["name"].replace("('", "").replace("',)", "") }}" width="100" height="100"></td>
-            <td>{{ channelslist[chan_dict]["listing_title"] }}</td>
-            <td><img src="{{ channelslist[chan_dict]["listing_thumbnail"].replace("('", "").replace("',)", "") }}" alt="{{ channelslist[chan_dict]["listing_title"].replace("('", "").replace("',)", "") }}" width="100" height="100"></td>
-            <td>{{ channelslist[chan_dict]["listing_description"].replace("('", "").replace("',)", "") }}</td>
+            <td><img src="{{ channelslist[chan_dict]["chan_thumbnail"][0] }}" alt="{{ channelslist[chan_dict]["name"][0] }}" width="100" height="100"></td>
+            <td>{{ channelslist[chan_dict]["listing_title"][0] }}</td>
+            <td><img src="{{ channelslist[chan_dict]["listing_thumbnail"][0] }}" alt="{{ channelslist[chan_dict]["listing_title"][0] }}" width="100" height="100"></td>
+            <td>{{ channelslist[chan_dict]["listing_description"][0] }}</td>
             <td>{{ channelslist[chan_dict]["listing_time_start"] }}</td>
             <td>{{ channelslist[chan_dict]["listing_time_end"] }}</td>
             <td>{{ channelslist[chan_dict]["listing_remaining_time"] }}</td>
