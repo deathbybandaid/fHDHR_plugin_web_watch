@@ -22,9 +22,19 @@ class Watch_HTML():
 
     def get(self, *args):
 
-        origin = self.fhdhr.origins.valid_origins[0]
-        channel_id = [x["id"] for x in self.fhdhr.device.channels.get_channels(origin)][0]
+        watch_url = None
 
-        watch_url = '/api/webwatch?method=stream&channel=%s&origin=%s' % (channel_id, origin)
+        origin_methods = self.fhdhr.origins.valid_origins
+        if len(self.fhdhr.origins.valid_origins):
+            origin = request.args.get('origin', default=origin_methods[0], type=str)
+            if origin not in origin_methods:
+                origin = origin_methods[0]
+
+            valid_channels = [x["id"] for x in self.fhdhr.device.channels.get_channels(origin)]
+            channel_id = request.args.get('channel_id', default=valid_channels[0], type=str)
+            if channel_id not in valid_channels:
+                channel_id = valid_channels[0]
+
+            watch_url = '/api/webwatch?method=stream&channel=%s&origin=%s' % (channel_id, origin)
 
         return render_template_string(self.template.getvalue(), request=request, session=session, fhdhr=self.fhdhr, watch_url=watch_url)
