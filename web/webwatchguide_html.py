@@ -44,6 +44,7 @@ class WatchGuide_HTML():
             channelslist = {}
             sorted_channel_list = channel_sort([self.fhdhr.device.channels.list[origin][x].number for x in list(self.fhdhr.device.channels.list[origin].keys())])
             for channel in sorted_channel_list:
+                print(channel)
 
                 channel_obj = self.fhdhr.device.channels.get_channel_obj("number", channel, origin)
                 channel_dict = channel_obj.dict.copy()
