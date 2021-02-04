@@ -23,10 +23,10 @@ class WatchGuide_HTML():
     def __call__(self, *args):
         return self.get(*args)
 
-    def get_whats_on(self, whatson_all, fhdhr_id):
-        print(whatson_all.keys())
+    def get_whats_on(self, whatson_all, fhdhr_id, origin):
         for channel in list(whatson_all.keys()):
-            if whatson_all[channel]["id"] == fhdhr_id:
+            chan_obj = self.fhdhr.device.channels.get_channel_obj("origin_id", whatson_all[channel]["id"], origin)
+            if chan_obj.dict["id"] == fhdhr_id:
                 return whatson_all[channel]
         return {}
 
@@ -50,8 +50,7 @@ class WatchGuide_HTML():
                 channel_dict["chan_thumbnail"] = channel_obj.thumbnail
                 channel_dict["watch_url"] = '/api/webwatch?method=stream&channel=%s&origin=%s' % (fhdhr_id, origin)
 
-                channel_dict["now_playing"] = self.get_whats_on(whatson_all, fhdhr_id)
-                print(channel_dict["now_playing"])
+                channel_dict["now_playing"] = self.get_whats_on(whatson_all, fhdhr_id, origin)
 
                 channel_dict["listing_title"] = channel_dict["now_playing"]["listing"][0]["title"],
                 channel_dict["listing_thumbnail"] = channel_dict["now_playing"]["listing"][0]["thumbnail"],
