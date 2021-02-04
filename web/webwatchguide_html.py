@@ -42,16 +42,18 @@ class WatchGuide_HTML():
             whatson_all = self.fhdhr.device.epg.whats_on_allchans(origin)
 
             channelslist = {}
-            for fhdhr_id in [x["id"] for x in self.fhdhr.device.channels.get_channels(origin)]:
-                channel_obj = self.fhdhr.device.channels.get_channel_obj("id", fhdhr_id, origin)
+            sorted_channel_list = channel_sort([x["number"] for x in self.fhdhr.device.channels.get_channels(origin)])
+            for channel in sorted_channel_list:
+
+                channel_obj = self.fhdhr.device.channels.get_channel_obj("number", channel, origin)
                 channel_dict = channel_obj.dict.copy()
+
+                now_playing = whatson_all[channel]
+                current_listing = now_playing["listing"][0]
 
                 channel_dict["number"] = channel_obj.number
                 channel_dict["chan_thumbnail"] = channel_obj.thumbnail
-                channel_dict["watch_url"] = '/webwatch?channel=%s&origin=%s' % (fhdhr_id, origin)
-
-                now_playing = self.get_whats_on(whatson_all, fhdhr_id, origin)
-                current_listing = now_playing["listing"][0]
+                channel_dict["watch_url"] = '/webwatch?channel=%s&origin=%s' % (channel_dict["id"], origin)
 
                 channel_dict["listing_title"] = current_listing["title"],
                 channel_dict["listing_thumbnail"] = current_listing["thumbnail"],
@@ -71,12 +73,5 @@ class WatchGuide_HTML():
                     else:
                         channel_dict["listing_%s" % time_item] = str(datetime.datetime.fromtimestamp(current_listing[time_item]))
                 channelslist[channel_obj.number] = channel_dict
-                print(channel_dict)
 
-            # Sort the channels
-            sorted_channel_list = channel_sort(list(channelslist.keys()))
-            sorted_chan_guide = []
-            for channel in sorted_channel_list:
-                sorted_chan_guide.append(channelslist[channel])
-
-        return render_template_string(self.template.getvalue(), request=request, session=session, fhdhr=self.fhdhr, channelslist=sorted_chan_guide, origin=origin, origin_methods=origin_methods, list=list)
+        return render_template_string(self.template.getvalue(), request=request, session=session, fhdhr=self.fhdhr, channelslist=channelslist, origin=origin, origin_methods=origin_methods, list=list)
