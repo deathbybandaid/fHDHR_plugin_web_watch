@@ -1,4 +1,4 @@
-from flask import request, render_template_string, session
+from flask import request, render_template_string, session, abort, Response
 import pathlib
 from io import StringIO
 
@@ -24,14 +24,44 @@ class Watch_HTML():
 
         origin_methods = self.fhdhr.origins.valid_origins
         if len(self.fhdhr.origins.valid_origins):
-            origin = request.args.get('origin', default=origin_methods[0], type=str)
-            if origin not in origin_methods:
-                origin = origin_methods[0]
 
-            valid_channels = [x["id"] for x in self.fhdhr.device.channels.get_channels(origin)]
-            channel_id = request.args.get('channel_id', default=valid_channels[0], type=str)
-            if channel_id not in valid_channels:
-                channel_id = valid_channels[0]
+            channel_number = request.args.get('channel', None, type=str)
+            if not channel_number:
+                return "Missing Channel"
+
+            origin = request.args.get('origin', default=origin_methods[0], type=str)
+
+            if origin:
+
+                if str(channel_number) in [str(x) for x in self.fhdhr.device.channels.get_channel_list("number", origin)]:
+                    chan_obj = self.fhdhr.device.channels.get_channel_obj("number", channel_number, origin)
+                elif str(channel_number) in [str(x) for x in self.fhdhr.device.channels.get_channel_list("id", origin)]:
+                    chan_obj = self.fhdhr.device.channels.get_channel_obj("id", channel_number, origin)
+                else:
+                    response = Response("Not Found", status=404)
+                    response.headers["X-fHDHR-Error"] = "801 - Unknown Channel"
+                    self.fhdhr.logger.error(response.headers["X-fHDHR-Error"])
+                    abort(response)
+
+            else:
+
+                if str(channel_number) in [str(x) for x in self.fhdhr.device.channels.get_channel_list("id")]:
+                    chan_obj = self.fhdhr.device.channels.get_channel_obj("id", channel_number)
+                else:
+                    response = Response("Not Found", status=404)
+                    response.headers["X-fHDHR-Error"] = "801 - Unknown Channel"
+                    self.fhdhr.logger.error(response.headers["X-fHDHR-Error"])
+                    abort(response)
+
+            if not chan_obj.dict["enabled"]:
+                response = Response("Service Unavailable", status=503)
+                response.headers["X-fHDHR-Error"] = str("806 - Tune Failed")
+                self.fhdhr.logger.error(response.headers["X-fHDHR-Error"])
+                abort(response)
+
+            origin = chan_obj.origin
+            channel_number = chan_obj.number
+            channel_id = chan_obj.dict["id"]
 
             watch_url = '/api/webwatch?method=stream&channel=%s&origin=%s' % (channel_id, origin)
 
