@@ -31,21 +31,21 @@
         {% for chan_dict in channelslist %}
           <tr>
             <td>
-              {% if chan_dict["enabled"] %}
-                <a href="{{ chan_dict["watch_url"] }}">Play</a>
+              {% if channelslist[chan_dict]["enabled"] %}
+                <a href="{{ channelslist[chan_dict]["watch_url"] }}">Play</a>
               {% else %}
-                <a href="{{ chan_dict["watch_url"] }}" style="visibility:hidden">Play</a>
+                <a href="{{ channelslist[chan_dict]["watch_url"] }}" style="visibility:hidden">Play</a>
               {% endif %}
             </td>
-            <td>{{ chan_dict["name"] }}</td>
-            <td>{{ chan_dict["number"] }}</td>
-            <td><img src="{{ chan_dict["chan_thumbnail"] }}" alt="{{ chan_dict["name"] }}" width="100" height="100"></td>
-            <td>{{ chan_dict["listing_title"] }}</td>
-            <td><img src="{{ chan_dict["listing_thumbnail"] }}" alt="{{ chan_dict["listing_title"] }}" width="100" height="100"></td>
-            <td>{{ chan_dict["listing_description"] }}</td>
-            <td>{{ chan_dict["listing_time_start"] }}</td>
-            <td>{{ chan_dict["listing_time_end"] }}</td>
-            <td>{{ chan_dict["listing_remaining_time"] }}</td>
+            <td>{{ channelslist[chan_dict]["name"] }}</td>
+            <td>{{ channelslist[chan_dict]["number"] }}</td>
+            <td><img src="{{ channelslist[chan_dict]["chan_thumbnail"] }}" alt="{{ channelslist[chan_dict]["name"] }}" width="100" height="100"></td>
+            <td>{{ channelslist[chan_dict]["listing_title"] }}</td>
+            <td><img src="{{ channelslist[chan_dict]["listing_thumbnail"] }}" alt="{{ channelslist[chan_dict]["listing_title"] }}" width="100" height="100"></td>
+            <td>{{ channelslist[chan_dict]["listing_description"] }}</td>
+            <td>{{ channelslist[chan_dict]["listing_time_start"] }}</td>
+            <td>{{ channelslist[chan_dict]["listing_time_end"] }}</td>
+            <td>{{ channelslist[chan_dict]["listing_remaining_time"] }}</td>
           </tr>
         {% endfor %}
       </tbody>
